@@ -1,0 +1,104 @@
+### Testing CRUD on smoothies
+### Data set up for creating, viewing, updating, and deletign smoothie
+@jwt = {"id":"TWFnaWMgSm9obnNvbg==","fullName":"Magic Johnson","isAdmin": false  }
+@newSmoothie = { "Name": "The best smoothie"}
+### Calls the authentication endpoint to get a token
+GET https://higharcauthintication.azurewebsites.net/api/Authentication
+
+{
+    "fullName": "Magic Johnson"
+}
+###
+# @name createdSmoothieResponse
+POST https://smoothieservice.azurewebsites.net/api/CreateSmoothie
+
+{
+    "jwt": {{jwt}},
+    "smoothie": {{newSmoothie}}
+}
+
+###
+@createdSmoothie = {{createdSmoothieResponse.response.body}}
+@createSmoothieId = {{createdSmoothieResponse.response.body.Id}}
+
+### Get the smoothie that was just create with no ingredients
+GET https://smoothieservice.azurewebsites.net/api/GetSmoothie/{{createSmoothieId}}
+
+### Add an ingredient to the smoothie
+POST http://localhost:7071/api/UpdateSmoothie
+
+{
+    "jwt": {{jwt}},
+    "smoothie": {
+    "Ingredients": [
+    {
+        "Id": 1,
+        "Smoothie": null,
+        "Measure": {
+        "Id": 1,
+        "FullName": "Pounds",
+        "Abbreviation": "LB"
+        },
+        "Amount": 0.5,
+        "Ingredient": {
+        "Id": 1,
+        "Name": "Stawberry"
+        }
+    }
+    ],
+    "Id": {{createSmoothieId}},
+    "Name": "The best smoothie",
+    "User": {
+    "Id": 1,
+    "FullName": "Magic Johnson",
+    "UserKey": "MagicMissle"
+    }
+    }
+}
+
+### verifiy that the ingredient was added
+GET https://smoothieservice.azurewebsites.net/api/GetSmoothie/{{createSmoothieId}}
+
+### Deleting the Smoothie that was created
+POST https://smoothieservice.azurewebsites.net/api/DeleteSmoothie
+
+{
+    "jwt": {{jwt}},
+    "smoothie":{{createdSmoothie}}
+}
+
+
+### Testing Measure; adding and viewing
+### Look at the all the measure in the system
+https://smoothieservice.azurewebsites.net/api/GetMeasure
+
+### Add Fairy Dust
+https://smoothieservice.azurewebsites.net/api/AddMeasure
+
+{
+    "measure": "Fairy Dust",
+    "abbreviation": "FD"
+}
+### Verify that Fairy Dust was added
+https://smoothieservice.azurewebsites.net/api/GetMeasure
+
+### Testing Ingredients; adding and viewing
+### Look at all the ingredients in the system
+get https://smoothieservice.azurewebsites.net/api/GetIngredients
+
+### lets add Rainbows
+POST http://localhost:7071/api/AddIngredient
+
+{
+    "ingredient": "Rainbows"
+}
+
+### Verify Rainbows was added to the system
+get https://smoothieservice.azurewebsites.net/api/GetIngredients
+
+### getting information about one user
+###
+get https://smoothieservice.azurewebsites.net/api/GetAllSmoothie/8
+
+###
+get http://localhost:7071/api/GetAllSmoothie/100
