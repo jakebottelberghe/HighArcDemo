@@ -3,7 +3,7 @@ import { SqlConnector } from "../DAL/SqlConnector";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     
-    let dataSource = new SqlConnector(process.env["SqlServer"], process.env["SqlUser"], process.env["SqlPassword"]);
+    let dataSource = new SqlConnector(process.env["SqlServer"], process.env["SqlUser"], process.env["SqlPassword"], process.env["SqlDB"]);
     let {measure, abbreviation} = req.body;
     await dataSource.addMeasure(measure, abbreviation);
 

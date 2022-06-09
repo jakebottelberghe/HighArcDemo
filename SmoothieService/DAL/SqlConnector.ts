@@ -10,7 +10,7 @@ import { SimpleSmoothie } from "./models/SimpleSmoothie";
 export class SqlConnector {
     // private connection: Connection;
     private configuration;
-    constructor(server: string, userName: string, password: string) {
+    constructor(server: string, userName: string, password: string, database:string) {
         this.configuration = {
             authentication: {
                 options: {
@@ -22,7 +22,10 @@ export class SqlConnector {
             server,
             options: {
                 encrypt: true, // for azure
-                database: 'smoothieService'
+                database,
+                cryptoCredentialsDetails: {
+                    minVersion: 'TLSv1'
+                }
             }
         };
     }

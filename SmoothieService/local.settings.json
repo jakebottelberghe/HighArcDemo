@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "SqlServer": "localhost",
+    "SqlUser": "testUser",
+    "SqlPassword": "Test1",
+    "SqlDB": "smoothieCompany"
+  }
+}

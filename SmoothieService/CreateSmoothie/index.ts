@@ -12,7 +12,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         context.res = {status: 400};
         return;
     }    
-    let dataSource = new SqlConnector(process.env["SqlServer"], process.env["SqlUser"], process.env["SqlPassword"]);
+    let dataSource = new SqlConnector(process.env["SqlServer"], process.env["SqlUser"], process.env["SqlPassword"], process.env["SqlDB"]);
     var user = await dataSource.getOrCreateUser(jwt.id, jwt.fullName);
     
     //Better error handling
